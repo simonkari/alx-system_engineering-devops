@@ -1,1 +1,1 @@
-alx is intresting
+path name of the current working directory
