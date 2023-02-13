@@ -1,0 +1,2 @@
+#!/bin/bash
+find . -type f -name "*.gif" -print0 | xargs -0 ls -lS | awk '$9 ~ /\.[^.]*$/ {gsub(/\.[^.]*$/,"",$9); print $9}' | sort -f
