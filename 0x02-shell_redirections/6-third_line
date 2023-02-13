@@ -1,6 +1,2 @@
 #!/bin/bash
-filename = input("iacta: ")
-
-with open(iacta, 'r') as file:
-    lines = file.readlines()
-    print(lines[2])
+print(open(input("iacta: "), 'r').readlines()[2])
