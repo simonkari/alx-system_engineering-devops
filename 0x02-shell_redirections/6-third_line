@@ -1,2 +1,2 @@
 #!/bin/bash
-print(open(input("iacta: "), 'r').readlines()[2])
+!head -n 3 $(input("iacta: ")) | tail -n 1 | vi -
