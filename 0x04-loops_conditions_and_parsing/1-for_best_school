@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# This script is displaying "Holberton School" 10 times
+# The script is programmed to exhibit the phrase  "Best School" a total of 10 instances.
+
 for (( i=0; i<10; i++ ))
 do
     echo "Best School"
