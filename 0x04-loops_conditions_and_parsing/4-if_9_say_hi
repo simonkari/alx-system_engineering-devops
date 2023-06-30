@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 #displays hi on the 9thh line
+# displays Best School 10 times, but for the 9th iteration,
+# displays Best School and then Hi on a new line.
 while [ $i -lt 10 ]
 do
 echo "Best School"
