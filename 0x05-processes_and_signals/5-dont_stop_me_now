@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 #kills the To infinity and beyond indefinitely infinity loop.
+#Script that stops task 4 process
+
 kill "$(pgrep -f 4-to_infinity_and_beyond)"
