@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Parses content of /etc/passwd file
+# analyzes content of /etc/passwd file
 # display username, user id and home directory for eac line of /etc/paswwd
 
 while read -r passwd;
