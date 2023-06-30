@@ -5,31 +5,33 @@
 # Displays Y U no love me?! when receiving a SIGINT signal
 # Deletes the file /var/run/myscript.pid and terminates itself when
 # receiving a SIGQUIT or SIGTERM signal
-SIGTERM_handler()
-{
-    echo "I hate the kill command"
-    rm /var/run/myscript.pid
-    exit 0
+# Function to handle SIGTERM and SIGQUIT signals
+cleanup() {
+  echo "Deleting PID file and terminating the script."
+  rm -f /var/run/myscript.pid
+  exit 0
 }
 
-SIGINT_handler()
-{
-    echo "Y U no love me?!"
+# Function to handle SIGINT signal
+interrupt() {
+  echo "Y U no love me?!"
 }
 
-SIGQUIT_handler()
-{
-    rm /var/run/myscript.pid
-    exit 0
+# Function to handle SIGTERM signal
+terminate() {
+  echo "I hate the kill command"
 }
 
+# Register signal handlers
+trap cleanup SIGQUIT SIGTERM
+trap interrupt SIGINT
+trap terminate SIGTERM
+
+# Create PID file
 echo $$ > /var/run/myscript.pid
 
-trap "SIGTERM_handler" SIGTERM
-trap "SIGINT_handler" SIGINT
-trap "SIGQUIT_handler" SIGQUIT
-
+# Display message indefinitely
 while true; do
-	echo "To infinity and beyond"
-	sleep 2
+  echo "To infinity and beyond"
+  sleep 1
 done
