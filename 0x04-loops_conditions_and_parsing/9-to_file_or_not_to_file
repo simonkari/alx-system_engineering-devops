@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # gives information about school file
 
-if [ -e "holbertonschool" ]
+if [ -e "Bestschool" ]
 then
   echo "school file exists"
 
-  if [ -s "holbertonschool" ]
+  if [ -s "Bestschool" ]
   then
     echo "school file is not empty"
 
@@ -13,7 +13,7 @@ then
     echo "school file is empty"
   fi
 
-  if [ -f "holbertonschool" ]
+  if [ -f "Bestschool" ]
   then
     echo "school file is a regular file"
 
