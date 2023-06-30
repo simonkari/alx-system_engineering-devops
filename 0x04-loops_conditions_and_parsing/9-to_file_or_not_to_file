@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Gives description about the school file
+# gives information about school file
 
 FILE="school"
 
@@ -7,10 +7,13 @@ if [ -e "$FILE" ]
 then
     echo "school file exists"
     if [ ! -s "$FILE" ]
+
     then
         echo "school file is empty"
+
     else
         echo "school file is not empty"
+
     fi
     if [ -f "$FILE" ]
     then
