@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 #displays hi on the 9thh line
-
 while [ $i -lt 10 ]
 do
 echo "Best School"
