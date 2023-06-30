@@ -1,0 +1,2 @@
+#!/bin/bash
+cat logfile.tsv | python script.py
