@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-#kills the To infinity and beyond indefinitely infiniy loop.
+# kills the To infinity and beyond indefinitely infiniy loop.
+# Stops 4-to_infinity_and_beyond process without using kill/killall
 pkill -f 4-to_infinity_and_beyond
