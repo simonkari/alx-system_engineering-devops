@@ -1,6 +1,7 @@
 # The following Puppet code generates a file in the /tmp directory.
 
 file { 'school':
+# Ensure that the file exists
   ensure  => file,
   path    => '/tmp/school',
   mode    => '0744',
