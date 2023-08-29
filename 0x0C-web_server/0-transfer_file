@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Check if at least 3 parameters are provided
+if [ $# -lt 3 ]; then
+    echo "Usage: $0 PATH_TO_FILE IP USERNAME [PATH_TO_SSH_KEY]"
+    exit 1
+fi
+
+path_to_file="$1"
+ip="$2"
+username="$3"
+ssh_key="$4"
+
+# If SSH key path is provided, use it; otherwise, use the default key
+if [ -n "$ssh_key" ]; then
+    scp_cmd="scp -i $ssh_key"
+else
+    scp_cmd="scp"
+fi
+
+# Disable strict host key checking
+scp_cmd="$scp_cmd -o StrictHostKeyChecking=no"
+
+# Transfer the file
+$scp_cmd "$path_to_file" "$username@$ip:~/"
+
+exit 0
+
