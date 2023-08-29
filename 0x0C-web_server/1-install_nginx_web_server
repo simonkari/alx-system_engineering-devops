@@ -1,11 +1,25 @@
-#!/usr/bin/env bash
-# This code installs an nginx web server.
-sudo apt update
-sudo apt install nginx -y
-sudo ufw allow 22
-sudo ufw allow 80
-sudo ufw --force enable
-sudo ufw status
-systemctl status nginx
-echo 'Holberton School' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
-sudo service nginx restart
+#!/bin/bash
+
+# Update package list and install nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Create a basic HTML file containing "Hello World!"
+echo "<html><head><title>Hello World!</title></head><body><p>Hello World!</p></body></html>" | sudo tee /var/www/html/index.html
+
+# Make sure nginx is listening on port 80
+sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+
+# Restart nginx
+sudo /etc/init.d/nginx restart
+
+# Test the nginx configuration using curl
+response=$(curl -s http://127.0.0.1)
+if [[ "$response" == *"Hello World!"* ]]; then
+    echo "Nginx is correctly configured."
+else
+    echo "Nginx configuration test failed."
+fi
+
+# Check Nginx logs for troubleshooting
+sudo cat /var/log/nginx/error.log
