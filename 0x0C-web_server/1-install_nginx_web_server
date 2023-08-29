@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# This script installs an nginx web server
+
+# Update package lists and install nginx
+sudo apt update
+sudo apt install nginx -y
+
+# Allow SSH and HTTP traffic
+sudo ufw allow 22      # SSH
+sudo ufw allow 80      # HTTP
+
+# Enable the firewall and display its status
+sudo ufw --force enable
+sudo ufw status
+
+# Display nginx service status
+systemctl status nginx
+
+# Set the default index page
+index_content="Hello World!"
+index_path="/var/www/html/index.nginx-debian.html"
+echo "$index_content" | sudo tee "$index_path" > /dev/null
+
+# Restart nginx service
+sudo systemctl restart nginx
