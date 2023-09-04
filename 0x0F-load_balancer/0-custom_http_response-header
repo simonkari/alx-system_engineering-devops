@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # This script configures Nginx to include a custom message in its HTTP response.
-
+# Update the package repository to fetch the latest package information
 sudo apt update
 sudo apt install nginx -y
 sudo sed -i "20i\        add_header X-Served-By $HOSTNAME;" /etc/nginx/nginx.conf
+# Restart the Nginx service to apply the configuration changes
 sudo service nginx restart
