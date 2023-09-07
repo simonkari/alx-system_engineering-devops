@@ -1,27 +1,32 @@
-global
-    maxconn 4096
-    tune.ssl.default-dh-param 2048
+#!/bin/bash
 
-defaults
-    mode http
-    timeout connect 5s
-    timeout client 50s
-    timeout server 50s
+# Install HAProxy
+sudo apt-get update
+sudo apt-get install -y haproxy
 
-frontend www-http
-    bind *:80
-    reqadd X-Forwarded-Proto:\ http
-    default_backend www-backend
+# Install Certbot
+sudo apt-get install -y certbot python3-certbot-nginx
 
+# Request an SSL certificate for your subdomain
+sudo certbot certonly --standalone -d www.your_subdomain.com -m your_email@example.com
+
+# Create or edit the HAProxy configuration file
+cat <<EOL | sudo tee /etc/haproxy/haproxy.cfg
 frontend www-https
-    bind *:443 ssl crt /etc/letsencrypt/live/www.example.com/fullchain.pem
+    bind *:443 ssl crt /etc/letsencrypt/live/www.your_subdomain.com/fullchain.pem
     reqadd X-Forwarded-Proto:\ https
     default_backend www-backend
 
 backend www-backend
-    server web-server 127.0.0.1:8080
+    server web-server 127.0.0.1:80
+EOL
 
-listen stats
-    bind :8081
-    stats enable
-    stats uri /stats
+# Test the HAProxy configuration
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+
+# Restart HAProxy
+sudo service haproxy restart
+
+# Display a message indicating completion
+echo "HAProxy setup for SSL termination is complete."
+
