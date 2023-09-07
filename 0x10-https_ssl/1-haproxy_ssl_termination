@@ -1,32 +1,39 @@
-#!/bin/bash
+global
+    log     /dev/log local0
+    maxconn 2048
+    user    haproxy
+    group   haproxy
+    tune.ssl.default-dh-param 2048
 
-# Install HAProxy
-sudo apt-get update
-sudo apt-get install -y haproxy
+defaults
+    log     global
+    mode    http
+    option  dontlognull
+    retries 3
+    option  redispatch
+    timeout server  10000
+    timeout connect  5000
+    timeout client  10000
+    option  forwardfor
+    option  http-server-close
 
-# Install Certbot
-sudo apt-get install -y certbot python3-certbot-nginx
+frontend www-http
+    bind   0.0.0.0:80
+    reqadd X-Forwarded-Proto:\ http
+    default_backend www-backend
 
-# Request an SSL certificate for your subdomain
-sudo certbot certonly --standalone -d www.your_subdomain.com -m your_email@example.com
-
-# Create or edit the HAProxy configuration file
-cat <<EOL | sudo tee /etc/haproxy/haproxy.cfg
 frontend www-https
-    bind *:443 ssl crt /etc/letsencrypt/live/www.your_subdomain.com/fullchain.pem
+    bind   0.0.0.0:443 ssl crt /etc/haproxy/certs/www.bdbnb.site.pem
     reqadd X-Forwarded-Proto:\ https
+    acl    letsencrypt-acl path_beg /.well-known/acme-challenge/
+    use_backend letsencrypt-backend if letsencrypt-acl
     default_backend www-backend
 
 backend www-backend
-    server web-server 127.0.0.1:80
-EOL
+    balance  roundrobin
+    redirect scheme https if !{ ssl_fc }
+    server 375-web-01 54.87.157.153:80 check
+    server 375-web-02 52.91.124.211:80 check
 
-# Test the HAProxy configuration
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
-
-# Restart HAProxy
-sudo service haproxy restart
-
-# Display a message indicating completion
-echo "HAProxy setup for SSL termination is complete."
-
+backend letsencrypt-backend
+    server letsencrypt 127.0.0.1:54321
