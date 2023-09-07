@@ -34,19 +34,17 @@ defaults
 	errorfile 504 /etc/haproxy/errors/504.http
 
 #--b3zaleel-alx.tech-params-begin--
-frontend b3zaleel-alx.tech-http-frontend
-	bind *:80
-	redirect scheme https code 301 if !{ ssl_fc }
-	http-request set-header X-Forwarded-Proto http
-	default_backend b3zaleel-alx.tech-backend
+frontend http-in
+    bind *:80
+    mode http
+    option forwardfor
+    reqadd X-Forwarded-Proto:\ http
+    redirect scheme https code 301 if !{ ssl_fc }
 
-frontend b3zaleel-alx.tech-https-frontend
-	bind *:443 ssl crt /etc/ssl/b3zaleel-alx.tech/b3zaleel-alx.tech.pem
-	http-request set-header X-Forwarded-Proto https
-	default_backend b3zaleel-alx.tech-backend
+frontend www-https
+    bind *:443 ssl crt /etc/letsencrypt/live/www.your_subdomain.com/fullchain.pem
+    reqadd X-Forwarded-Proto:\ https
+    default_backend www-backend
 
-backend b3zaleel-alx.tech-backend
-	balance roundrobin
-	server web01 34.73.0.174:80 check
-	server web02 35.196.78.105:80 check
-#--b3zaleel-alx.tech-params-end--
+backend www-backend
+    server web-server 127.0.0.1:80
