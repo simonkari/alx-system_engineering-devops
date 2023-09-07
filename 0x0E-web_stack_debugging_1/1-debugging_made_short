@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
-# The above line specifies that the script
-#should be executed using the Bash shell.
 
-# This line replaces the port 8080 with port 80.
+# This script enables Nginx on port 80.
 sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 
-# Start the Nginx service to enable it on port 80.
 sudo service nginx start
 
-# This line gracefully terminates the oldest Nginx process.
-# It's typically used for safe service restarts.
 pkill -o nginx
