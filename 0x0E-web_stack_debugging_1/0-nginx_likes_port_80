@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
-# This script enables nginx through port 80
+# Fixes the Nginx listening port and reloads the Nginx master process
 
-sed -i '0,/listen.*/s/listen.*/listen 80 default_server;/' /etc/nginx/sites-enabled/default
-pkill -9 nginx
-service nginx start
+# Define the Nginx configuration file
+config_file="/etc/nginx/sites-enabled/default"
+
+# Replace the listening port from 8080 to 80
+sed -i 's/listen 8080/listen 80/g' "$config_file"
+sed -i 's/listen \[::\]:8080/listen \[::\]:80/g' "$config_file"
+
+# Get the PID of the Nginx process and write it to a PID file
+nginx_pid=$(pgrep nginx -o)
+echo "$nginx_pid" > /run/nginx.pid
+
+# Reload Nginx
+nginx -s reload
+
+# Clear the PID file
+echo '' > /run/nginx.pid
