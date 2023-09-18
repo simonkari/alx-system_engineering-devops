@@ -1,0 +1,9 @@
+# Allow SSH (Port 22)
+sudo ufw allow ssh
+# Allow HTTPS (Port 443)
+sudo ufw allow https
+# Allow HTTP (Port 80)
+sudo ufw allow http
+# Deny all other incoming traffic
+sudo ufw default deny incoming
+sudo ufw enable
