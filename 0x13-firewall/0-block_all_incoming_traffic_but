@@ -1,4 +1,3 @@
-# Allow SSH (Port 22)
 sudo ufw allow ssh
 sudo ufw allow https
 sudo ufw allow http
