@@ -1,12 +1,9 @@
-#
 # Pre-Command Rules
-#
 # These rules should be executed before adding ufw command line rules. Custom
 # rules should be placed within the following chains:
 #   ufw-before-input
 #   ufw-before-output
 #   ufw-before-forward
-#
 
 # Redirect TCP port 8080 to port 80
 *nat
@@ -52,9 +49,7 @@ COMMIT
 # Allow DHCP client to function
 -A ufw-before-input -p udp --sport 67 --dport 68 -j ACCEPT
 
-#
 # Not Local Rules
-#
 -A ufw-before-input -j ufw-not-local
 
 # If destination is LOCAL, RETURN
