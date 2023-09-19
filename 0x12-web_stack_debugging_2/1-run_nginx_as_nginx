@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Script to configure a container to work with Nginx on port 8080
+
+# Stop Apache2 instances running on port 8080 on this server
+service apache2 stop
+pkill apache2
+
+# Configure Nginx to run on port 8080
+CONFIG_LOCATION='/etc/nginx/sites-available/default'
+CONFIG="server {
+    listen 8080 default_server;
+    listen [::]:8080 default_server ipv6only=on;
+
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+
+    # Make the site accessible from http://localhost/
+    server_name localhost;
+
+    location / {
+        # First attempt to serve the request as a file, then
+        # as a directory, and then fall back to displaying a 404 error.
+        try_files \$uri \$uri/ =404;
+        # Uncomment to enable naxsi on this location
+        # include /etc/nginx/naxsi.rules
+    }
+}"
+echo "$CONFIG" > "$CONFIG_LOCATION"
+
+chown nginx /etc/nginx/nginx.conf
+chmod u+r /etc/nginx/nginx.conf
+
+# Restart Nginx as the nginx user
+sudo -u nginx service nginx restart
