@@ -1,7 +1,17 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Fixes the issue with the server
+
+# Change permissions for nginx.conf
 chmod 644 /etc/nginx/nginx.conf
-sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
+
+# Update the 'user' directive in nginx.conf
+sed -Ei 's/^\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
+
+# Update the 'listen' directive in the default site configuration
 sed -Ei 's/(listen (\[::\]:)?80) /\180 /' /etc/nginx/sites-enabled/default
-pkill apache2
-su nginx -s /bin/bash -c 'service nginx restart'
+
+# Stop the Apache2 service
+systemctl stop apache2
+
+# Restart the Nginx service as the 'nginx' user
+su -s /bin/bash -c 'service nginx restart' nginx
