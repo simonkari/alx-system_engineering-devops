@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
-# This script configures Nginx to include a custom message in its HTTP response.
-# Update the package repository to fetch the latest package information
+# This script Installs, configures, and starts the server
+
 sudo apt update
 sudo apt install nginx -y
-sudo sed -i "20i\        add_header X-Served-By $HOSTNAME;" /etc/nginx/nginx.conf
-# Restart the Nginx service to apply the configuration changes
+sudo ufw enable
+sudo ufw allow 22
+sudo ufw allow 80
+
+echo "Ceci n'est pas une page" > /usr/share/nginx/html/custom_404.html
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+sed -i '/listen 80 default_server/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+sed -i '/listen 80 default_server/a error_page 404 /custom_404.html; location = /custom_404.html {root /usr/share/nginx/html;\n internal;}' /etc/nginx/sites-available/default
 sudo service nginx restart
