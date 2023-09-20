@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# This script sets up the nginx server in a way that when accessing
-# /redirect_me, it will lead to a different webpage through redirection.
-
+# This script Installs, configures, and starts the server
 sudo apt update
 sudo apt install nginx -y
 sudo ufw allow 80
