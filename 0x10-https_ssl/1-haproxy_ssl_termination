@@ -47,5 +47,5 @@ frontend  samuelmartins.tech-https-frontend
 
 backend samuelmartins.tech-backend
         balance roundrobin
-        server 239507-web-01 54.237.79.76:80 check
-        server 239507-web-02 100.25.156.57:80 check
+        server 239507-web-01 54.172.122.125:80 check
+        server 239507-web-02 18.204.15.241:80 check
