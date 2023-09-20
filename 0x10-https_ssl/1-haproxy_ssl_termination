@@ -33,19 +33,19 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-frontend samuelmartins.tech-http-frontend
+frontend simon-laboratory.tech-http-frontend
 	bind	 *:80
 	http-request set-header X-Forwarded-Proto http
 	default_backend	 samuelmartins.tech-backend
 
 
-frontend  samuelmartins.tech-https-frontend
+frontend  simon-laboratory.tech-https-frontend
 	bind *:443 ssl crt /etc/ssl/samuelmartins.tech.pem
 	http-request set-header X-Forwarded-Proto https
         default_backend samuelmartins.tech-backend
 
 
-backend samuelmartins.tech-backend
+backend simon-laboratory.tech-backend
         balance roundrobin
         server 239507-web-01 54.172.122.125:80 check
         server 239507-web-02 18.204.15.241:80 check
