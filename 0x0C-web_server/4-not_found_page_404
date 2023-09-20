@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# This code sets up the nginx server to include a personalized 404 page
-# displaying the message "Ceci n'est pas une page."
+# This script Installs, configures, and starts the server
 
 sudo apt update
 sudo apt install nginx -y
