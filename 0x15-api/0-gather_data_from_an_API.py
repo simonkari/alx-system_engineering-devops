@@ -2,7 +2,6 @@
 '''
 A script that gathers data from an API.
 '''
-
 import requests
 import re
 import sys
