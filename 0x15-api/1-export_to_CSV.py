@@ -1,55 +1,35 @@
 #!/usr/bin/python3
+'''Gathers data from an API and exports it to a CSV file.
 '''
-A script that gathers data from an API and exports it in CSV format.
-'''
-
-import csv
 import re
 import requests
 import sys
 
-# The URL of the API we are querying
+# Define the API URL
 API_URL = 'https://jsonplaceholder.typicode.com'
+'''The API's URL.'''
 
 if __name__ == '__main__':
+    # Check if command-line argument is provided
     if len(sys.argv) > 1:
         if re.fullmatch(r'\d+', sys.argv[1]):
+            # Parse the user ID from the command line argument
             id = int(sys.argv[1])
             # Fetch user data from the API
-            user_res = requests.get('{}/users/{}'.format(API_URL, id)).json()
-            # Fetch all todos from the API
-            todos_res = requests.get('{}/todos'.format(API_URL)).json()
-            # Extract the user's name from the user data
-            user_name = user_res.get('name')
-            # Filter todos by the user's ID
-            todos = list(filter(lambda x: x.get('userId') == id, todos_res))
-            # Filter completed todos
-            todos_done = list(filter(lambda x: x.get('completed'), todos))
-
-            print(
-                'Employee {} is done with tasks({}/{}):'.format(
-                    user_name,
-                    len(todos_done),
-                    len(todos)
-                )
-            )
-            for todo_done in todos_done:
-                print('\t {}'.format(todo_done.get('title')))
-
-            # Export data to CSV file
-            csv_file_name = f'{id}.csv'
-            with open(csv_file_name, mode='w', newline='') as csv_file:
-                csv_writer = csv.writer(csv_file)
-                # Write the header row
-                csv_writer.writerow(["USER_ID", "USERNAME",
-                                     "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-                # Write data for completed tasks
-                for todo_done in todos_done:
-                    csv_writer.writerow([id, user_name,
-                                         "Completed", todo_done.get('title')])
-
-            print(f'Data exported to {csv_file_name}')
-        else:
-            print('Invalid user ID provided.')
-    else:
-        print('Please provide a user ID as a command-line argument.')
+            user_res = requests.get(f'{API_URL}/users/{id}').json()
+            # Fetch todos data from the API
+            todos_res = requests.get(f'{API_URL}/todos').json()
+            user_name = user_res.get('username')
+            # Filter todos for the given user ID
+            todos = [todo for todo in todos_res if todo.get('userId') == id]
+            with open(f'{id}.csv', 'w') as file:
+                for todo in todos:
+                    # Write data in CSV format
+                    file.write(
+                        '"{}","{}","{}","{}"\n'.format(
+                            id,
+                            user_name,
+                            todo.get('completed'),
+                            todo.get('title')
+                        )
+                    )
