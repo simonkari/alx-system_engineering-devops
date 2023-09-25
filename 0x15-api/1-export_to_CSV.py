@@ -41,10 +41,12 @@ if __name__ == '__main__':
             with open(csv_file_name, mode='w', newline='') as csv_file:
                 csv_writer = csv.writer(csv_file)
                 # Write the header row
-                csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+                csv_writer.writerow(["USER_ID", "USERNAME",
+                                     "TASK_COMPLETED_STATUS", "TASK_TITLE"])
                 # Write data for completed tasks
                 for todo_done in todos_done:
-                    csv_writer.writerow([id, user_name, "Completed", todo_done.get('title')])
+                    csv_writer.writerow([id, user_name,
+                                         "Completed", todo_done.get('title')])
 
             print(f'Data exported to {csv_file_name}')
         else:
