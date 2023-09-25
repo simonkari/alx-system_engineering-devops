@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-'''Gathers data from an API and exports it to a CSV file.
+'''
+Gathers data from an API and exports it to a CSV file.
 '''
 import re
 import requests
@@ -7,7 +8,9 @@ import sys
 
 # Define the API URL
 API_URL = 'https://jsonplaceholder.typicode.com'
-'''The API's URL.'''
+'''
+The URL of the API.
+'''
 
 if __name__ == '__main__':
     # Check if command-line argument is provided
