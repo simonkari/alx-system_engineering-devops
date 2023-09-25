@@ -28,7 +28,7 @@ if __name__ == '__main__':
             todos = list(filter(lambda x: x.get('userId') == id, todos_res))
             # Filter completed todos
             todos_done = list(filter(lambda x: x.get('completed'), todos))
-            
+
             print(
                 'Employee {} is done with tasks({}/{}):'.format(
                     user_name,
