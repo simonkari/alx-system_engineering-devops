@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 '''
-A module that contains functions to work with the Reddit API.
+A module containing functions for working with the Reddit API.
 '''
 
 # Import the requests library, which is used for making HTTP requests.
