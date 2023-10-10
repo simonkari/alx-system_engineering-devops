@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 '''
-A module that encompasses functions designed for interacting with the Reddit API.
+A module that encompasses functions for interacting with the Reddit API.
 '''
 
 # Import the requests library, which is used for making HTTP requests.
@@ -10,12 +10,13 @@ import requests
 # Specify the foundational web address for Reddit's API.
 BASE_URL = 'https://www.reddit.com'
 
+
 def number_of_subscribers(subreddit):
     '''
     Fetches the subscriber count for a specified subreddit
     '''
-    
-    # Define the headers for the HTTP request. These headers mimic a web browser user-agent.
+
+    # Define the headers for the HTTP request.
     api_headers = {
         'Accept': 'application/json',
         'User-Agent': ' '.join([
@@ -27,18 +28,18 @@ def number_of_subscribers(subreddit):
         ])
     }
 
-    # Send an HTTP GET request to the Reddit API to retrieve information about the subreddit.
+    # Send an HTTP GET request to the Reddit API
     res = requests.get(
         '{}/r/{}/about/.json'.format(BASE_URL, subreddit),
         headers=api_headers,
         allow_redirects=False
     )
-    
+
     # Check if the HTTP request was successful (status code 200).
     if res.status_code == 200:
-        
-        # Parse the JSON response and extract the number of subscribers from the 'data' field.
+
+        # Parse the JSON response and extract the number of subscribers
         return res.json()['data']['subscribers']
-    
+
     # If the request was not successful, return 0 subscribers.
     return 0
