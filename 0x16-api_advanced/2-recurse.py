@@ -6,7 +6,7 @@ import json
 import requests
 
 
-def recurse(subreddit, hot_list=[], after=""):
+def recurse(subreddit, hot_list=[]):
     """Recursive function to get the lists of the hot tittles"""
     url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
     r = requests.get(url, headers={'user-agent': 'projectapi 0.1'},
