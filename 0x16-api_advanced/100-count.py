@@ -7,7 +7,7 @@ import requests
 
 def sort_histogram(histogram={}):
     '''
-    Arranges and outputs the provided histogram in a sorted manner.
+    Sorts and prints given histogram.
     '''
     # Filter out entries with a count of 0.
     histogram = list(filter(lambda kv: kv[1], histogram))
