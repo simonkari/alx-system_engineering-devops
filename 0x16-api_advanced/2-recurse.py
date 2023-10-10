@@ -9,6 +9,9 @@ import requests
 
 # Define the base URL for Reddit's API.
 BASE_URL = 'https://www.reddit.com'
+'''
+Reddit's base API URL.
+'''
 
 
 def recurse(subreddit, hot_list=[], n=0, after=None):
